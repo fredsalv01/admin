@@ -36,14 +36,12 @@
         <span class="text">Contact</span>
       </router-link>
     </div>
-    <div class="flex">
-      <h3>Menu</h3>
-      <div class="menu">
-        <router-link class="button" to="/settings">
-          <span class="material-icons">settings</span>
-          <span class="text">Settings</span>
-        </router-link>
-      </div>
+    <div class="flex"></div>
+    <div class="menu">
+      <router-link class="button" to="/settings">
+        <span class="material-icons">settings</span>
+        <span class="text">Settings</span>
+      </router-link>
     </div>
   </aside>
 </template>
@@ -51,10 +49,11 @@
 <script setup>
 import { ref } from "vue";
 
-const is_expanded = ref(false);
+const is_expanded = ref(localStorage.getItem("is_expanded") === "true");
 
 const ToggleMenu = () => {
   is_expanded.value = !is_expanded.value;
+  localStorage.setItem("is_expanded", is_expanded.value);
 };
 </script>
 
@@ -71,7 +70,13 @@ aside {
   display: flex;
   flex-direction: column;
   overflow: hidden;
+  box-shadow: rgba(110, 127, 143, 0.48) 6px 2px 16px 0px, rgba(121, 118, 118, 0.8) -6px -2px 16px 0px;
+  border-radius: 0 0.5rem 0.5rem 0;
   transition: 0.3s ease-in-out;
+
+  .flex {
+    flex: 1 1 0;
+  }
 
   .logo {
     margin-bottom: 1rem;
@@ -108,7 +113,7 @@ aside {
       span.material-icons {
         font-size: 1.5rem;
         color: var(--light);
-        transition: 0.2s ease-out;
+        transition: 0.5s ease-out;
 
         &.is-expanded {
           transform: rotate(-180deg);
@@ -194,7 +199,7 @@ aside {
   @media (max-width: 700px) {
     position: fixed;
     z-index: 99;
-    width: 6rem;
+    // width: 6rem;
   }
 }
 </style>
